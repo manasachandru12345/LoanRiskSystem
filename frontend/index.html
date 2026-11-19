@@ -1,0 +1,236 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loan Risk Management System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="brand-icon">LR</div>
+                <div>
+                    <h2>LoanRisk</h2>
+                    <p>Management System</p>
+                </div>
+            </div>
+
+            <p class="menu-label">MAIN MENU</p>
+
+            <nav>
+                <button class="nav-link active" data-page="dashboard">▦ Dashboard</button>
+                <button class="nav-link" data-page="customers">♙ Customers</button>
+                <button class="nav-link" data-page="applications">▤ Applications</button>
+                <button class="nav-link" data-page="risk">◈ Risk Assessments</button>
+                <button class="nav-link" data-page="loans">▣ Loans</button>
+                <button class="nav-link" data-page="payments">₹ Payments</button>
+            </nav>
+
+            <div class="sidebar-footer">
+                <span class="status-dot"></span>
+                System Dashboard
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="topbar">
+                <div>
+                    <p class="breadcrumb">LoanRisk / <span id="breadcrumb-page">Dashboard</span></p>
+                    <h1 id="page-heading">Dashboard Overview</h1>
+                </div>
+                <div class="admin-info">
+                    <div class="avatar">A</div>
+                    <div>
+                        <strong>Administrator</strong>
+                        <small>Project Admin</small>
+                    </div>
+                </div>
+            </header>
+
+            <section id="dashboard-page" class="page active">
+                <div class="welcome-section">
+                    <div>
+                        <h2>Welcome to LoanRisk 👋</h2>
+                        <p>Monitor customers, applications, loans and payments.</p>
+                    </div>
+                    <button class="primary-btn" onclick="loadDashboard()">↻ Refresh Data</button>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <p>Total Customers</p>
+                        <h2 id="total-customers">—</h2>
+                        <span>Registered customers</span>
+                    </div>
+                    <div class="stat-card">
+                        <p>Total Applications</p>
+                        <h2 id="total-applications">—</h2>
+                        <span>Loan applications</span>
+                    </div>
+                    <div class="stat-card">
+                        <p>Total Loans</p>
+                        <h2 id="total-loans">—</h2>
+                        <span>Recorded loans</span>
+                    </div>
+                    <div class="stat-card">
+                        <p>Total Payments</p>
+                        <h2 id="total-payments">—</h2>
+                        <span>Payment records</span>
+                    </div>
+                </div>
+
+                <div class="content-card">
+                    <div class="card-heading">
+                        <div>
+                            <h3>Recent Loan Applications</h3>
+                            <p>Latest applications from the database</p>
+                        </div>
+                        <button class="secondary-btn" onclick="showPage('applications')">View All</button>
+                    </div>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Application ID</th>
+                                    <th>Customer</th>
+                                    <th>Loan Type</th>
+                                    <th>Amount</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="recent-applications">
+                                <tr><td colspan="5" class="empty-message">Loading applications...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <p id="dashboard-message" class="message"></p>
+            </section>
+
+            <section id="customers-page" class="page">
+                <div class="section-toolbar">
+                    <div>
+                        <h2>Customer Management</h2>
+                        <p>View registered customer details.</p>
+                    </div>
+                    <button class="primary-btn" onclick="loadCustomers()">↻ Refresh</button>
+                </div>
+                <div class="content-card">
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr><th>ID</th><th>Name</th><th>Email</th><th>Phone</th><th>Annual Income</th></tr>
+                            </thead>
+                            <tbody id="customers-table">
+                                <tr><td colspan="5" class="empty-message">Loading customers...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <p id="customers-message" class="message"></p>
+            </section>
+
+            <section id="applications-page" class="page">
+                <div class="section-toolbar">
+                    <div>
+                        <h2>Loan Applications</h2>
+                        <p>View and monitor loan application status.</p>
+                    </div>
+                    <button class="primary-btn" onclick="loadApplications()">↻ Refresh</button>
+                </div>
+                <div class="content-card">
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr><th>ID</th><th>Customer</th><th>Loan Type</th><th>Amount</th><th>Duration</th><th>Status</th></tr>
+                            </thead>
+                            <tbody id="applications-table">
+                                <tr><td colspan="6" class="empty-message">Loading applications...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <p id="applications-message" class="message"></p>
+            </section>
+
+            <section id="risk-page" class="page">
+                <div class="section-toolbar">
+                    <div>
+                        <h2>Risk Assessments</h2>
+                        <p>View credit scores and risk classifications.</p>
+                    </div>
+                    <button class="primary-btn" onclick="loadRiskAssessments()">↻ Refresh</button>
+                </div>
+                <div class="content-card">
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr><th>Assessment ID</th><th>Application ID</th><th>Customer</th><th>Credit Score</th><th>Risk Level</th><th>Default Probability</th></tr>
+                            </thead>
+                            <tbody id="risk-table">
+                                <tr><td colspan="6" class="empty-message">Loading risk assessments...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <p id="risk-message" class="message"></p>
+            </section>
+
+            <section id="loans-page" class="page">
+                <div class="section-toolbar">
+                    <div>
+                        <h2>Loan Management</h2>
+                        <p>View approved loans and their current status.</p>
+                    </div>
+                    <button class="primary-btn" onclick="loadLoans()">↻ Refresh</button>
+                </div>
+                <div class="content-card">
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr><th>Loan ID</th><th>Customer</th><th>Application ID</th><th>Amount</th><th>Interest Rate</th><th>Status</th></tr>
+                            </thead>
+                            <tbody id="loans-table">
+                                <tr><td colspan="6" class="empty-message">Loading loans...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <p id="loans-message" class="message"></p>
+            </section>
+
+            <section id="payments-page" class="page">
+                <div class="section-toolbar">
+                    <div>
+                        <h2>Payment Management</h2>
+                        <p>View loan payment records and payment status.</p>
+                    </div>
+                    <button class="primary-btn" onclick="loadPayments()">↻ Refresh</button>
+                </div>
+                <div class="content-card">
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr><th>Payment ID</th><th>Loan ID</th><th>Customer</th><th>Amount</th><th>Payment Date</th><th>Status</th></tr>
+                            </thead>
+                            <tbody id="payments-table">
+                                <tr><td colspan="6" class="empty-message">Loading payments...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <p id="payments-message" class="message"></p>
+            </section>
+
+            <footer class="footer">
+                Loan Risk and Application Management System · Academic Project
+            </footer>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
