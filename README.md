@@ -16,7 +16,7 @@ The Loan Risk and Application Management System is a database-driven application
 
 ## Technology Stack
 
-| Layer | Technology |
+| **Layer** | **Technology** |
 |---|---|
 | Frontend | HTML, CSS, JavaScript |
 | Backend | Node.js, Express |
@@ -80,14 +80,70 @@ The `payment_status_update_trigger` runs after an update to `payments.payment_st
 
 ## Running the Project
 
-The project was developed locally on Windows using PowerShell and Docker.
+The project was developed locally on Windows using PowerShell and Docker Desktop.
 
-1. Start the PostgreSQL and Redis containers using the Docker configuration available for the project.
-2. Navigate to the `backend` folder.
-3. Install dependencies using `npm install`, if required.
-4. Start the backend using the available npm development script.
-5. Serve the `frontend` folder on port `5500`.
-6. Open `http://localhost:5500` in your browser.
+### Prerequisites
+
+- Node.js and npm
+- Docker Desktop
+- PostgreSQL 16 with pgvector support
+- Redis 7
+- Python for serving the frontend
+
+### Step 1: Start Docker Desktop
+
+Open Docker Desktop and wait until the Docker engine is running.
+
+### Step 2: Start PostgreSQL and Redis
+
+Open PowerShell and execute:
+
+```powershell
+docker start loan-postgres
+docker start loan-redis
+```
+
+The existing Docker containers provide the following services:
+
+- PostgreSQL: `localhost:5432`
+- Redis: `localhost:6379`
+
+**Note:** These commands use the existing containers created during project development. For a fresh installation, PostgreSQL and Redis containers must be created and configured separately. This repository does not include a Docker Compose configuration.
+
+### Step 3: Start the Backend
+
+Open a PowerShell terminal:
+
+```powershell
+cd LoanRiskSystem\backend
+npm install
+npm run dev
+```
+
+The backend server runs on port `5000`.
+
+The backend uses environment variables stored in `backend/.env` for database and Redis configuration.
+
+### Step 4: Start the Frontend
+
+Open another PowerShell terminal:
+
+```powershell
+cd LoanRiskSystem\frontend
+python -m http.server 5500
+```
+
+Open the application in your browser:
+
+`http://localhost:5500`
+
+### Step 5: Verify Backend Health
+
+Open:
+
+`http://localhost:5000/api/health`
+
+The endpoint reports the backend status and database connection information.
 
 Keep the backend and frontend terminal windows open while demonstrating the application.
 
